@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,5 +105,29 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.deleteById(taskId);
 
         return ResponseEntity.ok(Map.of("Success", taskId +" has been deleted"));
+    }
+
+    @Override
+    public ResponseEntity<TaskDto> updateTaskById(
+            Long taskId, TaskRequestDto taskRequestDto)
+    {
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() ->
+                new TaskNotFoundException(String.format("%d task is not found", taskId)));
+
+        if(taskRequestDto.getTitle() != null || !taskRequestDto.getTitle().isEmpty()){
+            taskEntity.setTitle(taskRequestDto.getTitle());
+        }
+        if(taskRequestDto.getDescription() != null || !taskRequestDto.getDescription().isEmpty()){
+            taskEntity.setDescription(taskRequestDto.getDescription());
+        }
+
+        if(taskRequestDto.getStatus() != null || !taskRequestDto.getStatus().isEmpty()){
+            taskEntity.setStatus(taskRequestDto.getStatus());
+        }
+
+
+        TaskEntity saved = taskRepository.save(taskEntity);
+
+        return ResponseEntity.ok(getTaskDto(saved));
     }
 }

@@ -17,4 +17,6 @@ public interface TaskService {
     ResponseEntity<TaskResponseDto>getTaskById(Long taskId);
 
     ResponseEntity<Map<String,String>>deleteTaskById(Long taskId);
+
+    ResponseEntity<TaskDto> updateTaskById(Long taskId, TaskRequestDto taskRequestDto);
 }

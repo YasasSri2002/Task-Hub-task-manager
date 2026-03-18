@@ -43,4 +43,11 @@ public class TaskController {
         return taskService.deleteTaskById(taskId);
     }
 
+    @PutMapping("/by-id")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<TaskDto>updateById
+            (@RequestParam Long taskId, @RequestBody TaskRequestDto taskRequestDto){
+        return taskService.updateTaskById(taskId,taskRequestDto);
+    }
+
 }
