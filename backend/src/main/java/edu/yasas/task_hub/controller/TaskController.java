@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +35,12 @@ public class TaskController {
     @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<TaskResponseDto>getTaskById(@RequestParam Long taskId){
         return taskService.getTaskById(taskId);
+    }
+
+    @DeleteMapping("/by-id")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Map<String,String>>deleteById(@RequestParam Long taskId){
+        return taskService.deleteTaskById(taskId);
     }
 
 }

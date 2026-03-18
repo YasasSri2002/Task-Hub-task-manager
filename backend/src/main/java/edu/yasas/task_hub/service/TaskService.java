@@ -6,6 +6,7 @@ import edu.yasas.task_hub.dto.response.TaskResponseDto;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TaskService {
 
@@ -14,4 +15,6 @@ public interface TaskService {
     ResponseEntity<List<TaskResponseDto>>getAllTasks();
 
     ResponseEntity<TaskResponseDto>getTaskById(Long taskId);
+
+    ResponseEntity<Map<String,String>>deleteTaskById(Long taskId);
 }

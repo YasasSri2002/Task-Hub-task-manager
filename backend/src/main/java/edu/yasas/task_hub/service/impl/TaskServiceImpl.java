@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static edu.yasas.task_hub.service.impl.UserServiceImpl.getUserDto;
@@ -92,5 +93,16 @@ public class TaskServiceImpl implements TaskService {
                 () -> new TaskNotFoundException("task is not found"));
 
         return ResponseEntity.ok(getTaskResponseDto(taskEntity));
+    }
+
+    @Override
+    public ResponseEntity<Map<String, String>> deleteTaskById(Long taskId) {
+        if(!taskRepository.existsById(taskId)){
+            throw new TaskNotFoundException("task is not found");
+        }
+
+        taskRepository.deleteById(taskId);
+
+        return ResponseEntity.ok(Map.of("Success", taskId +" has been deleted"));
     }
 }
