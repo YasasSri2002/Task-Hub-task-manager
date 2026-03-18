@@ -21,12 +21,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import java.util.Collections;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-
 @Component
 @EnableMethodSecurity
-@Profile("dev")
-public class SecurityConfig {
-
+@Profile("prod")
+public class SecurityProdConfig {
     private String[] publicUrls = {
             "/api/v1/user/register",
             "/api/v1/user/login"
@@ -38,7 +36,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(corsConfig-> corsConfig.configurationSource((request)->{
                     CorsConfiguration corsConfiguration = new CorsConfiguration();
-                    corsConfiguration.setAllowedOrigins(Collections.singletonList("*"));
+                    corsConfiguration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
                     corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
                     corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
                     corsConfiguration.setMaxAge(10L);
@@ -73,6 +71,4 @@ public class SecurityConfig {
         return new ProviderManager(authenticationProvider);
 
     }
-
-
 }
