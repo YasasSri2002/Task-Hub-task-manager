@@ -1,15 +1,14 @@
 package edu.yasas.task_hub.enity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.List;
 import java.util.UUID;
 @Entity
 @Table(name = "user_table")
@@ -29,5 +28,9 @@ public class UserEntity {
     private String email;
 
     private String password;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.PERSIST)
+    @JsonManagedReference
+    private List<TaskEntity> taskEntityList;
 
 }
