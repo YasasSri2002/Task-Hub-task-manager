@@ -27,7 +27,14 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityProdConfig {
     private String[] publicUrls = {
             "/api/v1/user/register",
-            "/api/v1/user/login"
+            "/api/v1/user/login",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/webjars/**",
+            "/api-docs/**",
+            "/api-docs"
     };
 
     @Bean
