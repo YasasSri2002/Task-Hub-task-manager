@@ -15,4 +15,6 @@ public class TaskRequestDto {
 
     private LocalDateTime createdAt;
 
+    private String userId;
+
 }

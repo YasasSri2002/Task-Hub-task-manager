@@ -2,6 +2,7 @@ package edu.yasas.task_hub.exceptions.handler;
 
 import edu.yasas.task_hub.dto.response.ErrorResponseDto;
 import edu.yasas.task_hub.exceptions.EmailAlreadyExistException;
+import edu.yasas.task_hub.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,5 +18,16 @@ public class GlobalExceptionHandler {
         errorResponseDto.setHttpStatus(HttpStatus.BAD_REQUEST);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDto);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> userHasNotFound(UserNotFoundException exception){
+
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+        errorResponseDto.setHttpStatus(HttpStatus.NOT_FOUND);
+        errorResponseDto.setMessage(exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDto);
+
     }
 }
