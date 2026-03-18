@@ -2,14 +2,14 @@ package edu.yasas.task_hub.controller;
 
 import edu.yasas.task_hub.dto.TaskDto;
 import edu.yasas.task_hub.dto.request.TaskRequestDto;
+import edu.yasas.task_hub.dto.response.TaskResponseDto;
 import edu.yasas.task_hub.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +22,12 @@ public class TaskController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<TaskDto> persist(@RequestBody TaskRequestDto taskRequestDto){
         return taskService.persist(taskRequestDto);
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('USER')")
+    public ResponseEntity<List<TaskResponseDto>>getAllTask(){
+        return taskService.getAllTasks();
     }
 
 
