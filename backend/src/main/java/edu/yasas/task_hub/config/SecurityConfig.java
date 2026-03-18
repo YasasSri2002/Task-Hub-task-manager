@@ -26,7 +26,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private String[] publicUrls = {
-            "/api/v1/user/register"
+            "/api/v1/user/register",
+            "/api/v1/user/login"
     };
 
     @Bean

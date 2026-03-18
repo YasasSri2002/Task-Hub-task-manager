@@ -1,7 +1,9 @@
 package edu.yasas.task_hub.controller;
 
 import edu.yasas.task_hub.dto.UserDto;
+import edu.yasas.task_hub.dto.request.LoginRequestDto;
 import edu.yasas.task_hub.dto.request.UserRequstDto;
+import edu.yasas.task_hub.dto.response.LoginResponseDto;
 import edu.yasas.task_hub.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,5 +22,10 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<UserDto>register(@RequestBody UserRequstDto userRequstDto){
         return userService.register(userRequstDto);
+    }
+
+    @PostMapping("/login")
+    public  ResponseEntity<LoginResponseDto>login(@RequestBody LoginRequestDto loginRequestDto){
+        return userService.login(loginRequestDto);
     }
 }
