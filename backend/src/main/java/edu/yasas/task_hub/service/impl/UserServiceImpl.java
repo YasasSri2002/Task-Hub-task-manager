@@ -8,6 +8,7 @@ import edu.yasas.task_hub.repository.UserRepository;
 import edu.yasas.task_hub.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public static UserDto getUserDto(UserEntity userEntity){
         return UserDto.builder()
@@ -38,8 +40,8 @@ public class UserServiceImpl implements UserService {
         }
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(userRequestDto.getUsername());
-        userRequestDto.setEmail(userRequestDto.getUsername());
-        userRequestDto.setPassword(userRequestDto.getPassword());
+        userEntity.setEmail(userRequestDto.getEmail());
+        userEntity.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
 
         UserEntity saved = userRepository.save(userEntity);
 
