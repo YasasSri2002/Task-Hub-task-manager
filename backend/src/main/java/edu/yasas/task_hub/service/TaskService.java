@@ -12,4 +12,6 @@ public interface TaskService {
     ResponseEntity<TaskDto>persist(TaskRequestDto taskRequestDto);
 
     ResponseEntity<List<TaskResponseDto>>getAllTasks();
+
+    ResponseEntity<TaskResponseDto>getTaskById(Long taskId);
 }

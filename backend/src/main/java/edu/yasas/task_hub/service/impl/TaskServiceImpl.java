@@ -5,6 +5,7 @@ import edu.yasas.task_hub.dto.request.TaskRequestDto;
 import edu.yasas.task_hub.dto.response.TaskResponseDto;
 import edu.yasas.task_hub.enity.TaskEntity;
 import edu.yasas.task_hub.enity.UserEntity;
+import edu.yasas.task_hub.exceptions.TaskNotFoundException;
 import edu.yasas.task_hub.exceptions.UserNotFoundException;
 import edu.yasas.task_hub.repository.TaskRepository;
 import edu.yasas.task_hub.repository.UserRepository;
@@ -82,5 +83,14 @@ public class TaskServiceImpl implements TaskService {
                 taskResponseDtoArrayList.add(getTaskResponseDto(taskEntity)));
         return ResponseEntity.ok(taskResponseDtoArrayList);
 
+    }
+
+    @Override
+    public ResponseEntity<TaskResponseDto> getTaskById(Long taskId) {
+
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(
+                () -> new TaskNotFoundException("task is not found"));
+
+        return ResponseEntity.ok(getTaskResponseDto(taskEntity));
     }
 }

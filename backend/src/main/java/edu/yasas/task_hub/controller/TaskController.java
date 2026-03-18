@@ -30,5 +30,10 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
+    @GetMapping("/by-id")
+    @PreAuthorize("hasAnyRole('USER')")
+    public ResponseEntity<TaskResponseDto>getTaskById(@RequestParam Long taskId){
+        return taskService.getTaskById(taskId);
+    }
 
 }
