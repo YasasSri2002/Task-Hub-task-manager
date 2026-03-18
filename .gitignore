@@ -1,6 +1,6 @@
 HELP.md
 backend/target/
-task_manager_back_end/.mvn/wrapper/maven-wrapper.jar
+backend/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 .mvn/**
@@ -10,7 +10,7 @@ backend/.apt_generated
 backend/.classpath
 backend/.factorypath
 backend/.project
-backend.settings
+backend/.settings
 backend/.springBeans
 backend/.sts4-cache
 
@@ -18,7 +18,7 @@ backend/.sts4-cache
 backend/.idea/**
 backend/*.iws
 backend/*.iml
-back_end/*.ipr
+backend/*.ipr
 
 ### NetBeans ###
 backend/nbproject/private/
