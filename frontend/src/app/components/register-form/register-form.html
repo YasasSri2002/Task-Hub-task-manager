@@ -1,0 +1,40 @@
+<div class="flex justify-center items-center h-screen">
+    <form  class="grid gap-4 w-full sm:w-md md:w-lg">
+        <div class="grid gap-1">
+            <label  htmlFor="email">Email</label>
+            <input type="text" name="email"
+                    class=" border border-gray-600 rounded-md px-2  h-8  sm:h-10  " 
+                    placeholder="you@example.com"
+            />
+                           
+        </div>
+        <div class="grid gap-1">
+            <label  htmlFor="username">User name</label>
+            <input type="text" name="username"
+                    class=" border border-gray-600 rounded-md px-2  h-8  sm:h-10  " 
+                    placeholder="Ayrton_Senna_de_silva"
+            />
+                            
+        </div>
+        <div class="grid gap-1">
+            <label htmlFor="password">Password</label>
+            <div class="relative flex items-center w-full">
+                <input name="password" type="password"
+                        id="password"
+                        class="border border-gray-600 rounded-md px-2 pr-10 w-full h-8 sm:h-10"
+                        placeholder="*****"
+                />
+                <button type="button"
+                        class="absolute right-3 flex items-center text-gray-500 hover:text-gray-800">
+                                <i class="fa-solid fa-eye-slash"></i>
+                </button>
+            </div>
+                        
+        </div>
+        <button type="submit" 
+                class="w-full border border-blue-600 bg-blue-600 py-1 px-4 rounded-md text-white 
+                    active:scale-75">
+                    Register
+        </button>
+    </form>
+</div>
