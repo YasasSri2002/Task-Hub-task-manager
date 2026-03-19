@@ -1,0 +1,9 @@
+@for (task of taskList; track task.id) {
+  <app-task-card
+    [task]="task"
+    (edit)="taskToEdit = $event; showTaskForm = true"
+    (delete)="handleDeleteTask($event)"
+    (markComplete)="handleMarkComplete($event)"
+    (markInProgress)="handleMarkInProgress($event)"
+  />
+}
