@@ -1,65 +1,76 @@
-<div class="flex justify-center items-center h-screen">
-    <form [formGroup]="registerForm" class="grid gap-4 w-full sm:w-md md:w-lg">
-        <div class="grid gap-1">
-            <label  For="email">Email</label>
-            <input type="text" name="email"
-                    class=" border border-gray-600 rounded-md px-2  h-8  sm:h-10  " 
-                    placeholder="you@example.com"
-                    formControlName="email"
-            />
-             @if(registerForm.controls.email.touched && registerForm.controls.email.hasError('email')){
-                    <p class="text-sm sm:text-md text-red-500">
-                        Enter a valid email
-                    </p> 
-            }@else if(registerForm.controls.email.touched && registerForm.controls.email.hasError('required')){
-                <p class="text-sm sm:text-md text-red-500">
-                        Email is required
-                    </p>
-            }
-                           
-        </div>
-        <div class="grid gap-1">
-            <label  For="username">User name</label>
-            <input type="text" name="username"
-                    class=" border border-gray-600 rounded-md px-2  h-8  sm:h-10  " 
-                    placeholder="Ayrton_Senna_de_silva"
-                    formControlName="username"
-            />
-            @if(registerForm.controls.username.touched && registerForm.controls.username.hasError('required')){
-                    <p class="text-sm sm:text-md text-red-500">
-                        Username is required!
-                    </p> 
-            }
-                      
-        </div>
-        <div class="grid gap-1">
-            <label htmlFor="password">Password</label>
-            <div class="relative flex items-center w-full">
-                <input name="password"  [type]="isPasswordShowing ? 'text' : 'password'"
-                        id="password"
-                        class="border border-gray-600 rounded-md px-2 pr-10 w-full h-8 sm:h-10"
-                        placeholder="*****"
-                        formControlName="password"
-                />
-                <button type="button"
-                        class="absolute right-3 flex items-center text-gray-500 hover:text-gray-800"
-                        (click) = "togglePassword()"
-                        >
-                                <fa-icon [icon]="isPasswordShowing ? eyeIcon : closedEyeIcon">
+
+<div class="flex justify-center min-h-screen items-center ">
+            <div class="grid gap-8 w-full md:w-md lg:w-xl px-5 sm:px-0">
+                <header class="grid justify-items-center">
+                    <i class="fa-solid fa-user-plus fa-eye text-2xl md:text-5xl lg:text-8xl text-blue-600"></i>
+                    <h1 class="text-center text-lg md:text-2xl lg:text-3xl">Create new account</h1>
+                    <h1 class="text-center text-md md:text-xl lg:text-2xl text-gray-600">Sign up for a new account</h1>
+                </header>
+                <div class="flex justify-center items-center">
+                    <form [formGroup]="registerForm" class="grid gap-4 w-full sm:w-md md:w-lg">
+                        <div class="grid gap-1">
+                            <label  For="email">Email</label>
+                            <input type="text" name="email"
+                                    class=" border border-gray-600 rounded-md px-2  h-8  sm:h-10  " 
+                                    placeholder="you@example.com"
+                                    formControlName="email"
+                            />
+                            @if(registerForm.controls.email.touched && registerForm.controls.email.hasError('email')){
+                                    <p class="text-sm sm:text-md text-red-500">
+                                        Enter a valid email
+                                    </p> 
+                            }@else if(registerForm.controls.email.touched && registerForm.controls.email.hasError('required')){
+                                <p class="text-sm sm:text-md text-red-500">
+                                        Email is required
+                                    </p>
+                            }
+                                        
+                        </div>
+                        <div class="grid gap-1">
+                            <label  For="username">User name</label>
+                            <input type="text" name="username"
+                                    class=" border border-gray-600 rounded-md px-2  h-8  sm:h-10  " 
+                                    placeholder="Ayrton_Senna_de_silva"
+                                    formControlName="username"
+                            />
+                            @if(registerForm.controls.username.touched && registerForm.controls.username.hasError('required')){
+                                    <p class="text-sm sm:text-md text-red-500">
+                                        Username is required!
+                                    </p> 
+                            }
                                     
-                                </fa-icon>
-                </button>
+                        </div>
+                        <div class="grid gap-1">
+                            <label htmlFor="password">Password</label>
+                            <div class="relative flex items-center w-full">
+                                <input name="password"  [type]="isPasswordShowing ? 'text' : 'password'"
+                                        id="password"
+                                        class="border border-gray-600 rounded-md px-2 pr-10 w-full h-8 sm:h-10"
+                                        placeholder="*****"
+                                        formControlName="password"
+                                />
+                                <button type="button"
+                                        class="absolute right-3 flex items-center text-gray-500 hover:text-gray-800"
+                                        (click) = "togglePassword()"
+                                        >
+                                                <fa-icon [icon]="isPasswordShowing ? eyeIcon : closedEyeIcon">
+                                                    
+                                                </fa-icon>
+                                </button>
+                            </div>
+                            @if(registerForm.controls.password.touched && registerForm.controls.password.hasError('min')){
+                                    <p class="text-sm sm:text-md text-red-500">
+                                        Password should be atleast 8 characters long
+                                    </p> 
+                            }                        
+                        </div>
+                        <button type="submit" 
+                                class="w-full border border-blue-600 bg-blue-600 py-1 px-4 rounded-md text-white 
+                                    active:scale-75">
+                                    Register
+                        </button>
+                    </form>
+                </div>
+                
             </div>
-             @if(registerForm.controls.password.touched && registerForm.controls.password.hasError('min')){
-                    <p class="text-sm sm:text-md text-red-500">
-                        Password should be atleast 8 characters long
-                    </p> 
-            }                        
-        </div>
-        <button type="submit" 
-                class="w-full border border-blue-600 bg-blue-600 py-1 px-4 rounded-md text-white 
-                    active:scale-75">
-                    Register
-        </button>
-    </form>
-</div>
+       </div>
