@@ -50,4 +50,9 @@ public class TaskController {
         return taskService.updateTaskById(taskId,taskRequestDto);
     }
 
+    @PatchMapping("/by-id/mark-as-completed")
+    public ResponseEntity<Map<String,String>> markAsCompleted(@RequestParam Long taskId){
+        return taskService.markAsComplete(taskId);
+    }
+
 }

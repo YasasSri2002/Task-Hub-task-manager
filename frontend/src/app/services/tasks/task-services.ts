@@ -19,8 +19,8 @@ export class TaskServices {
     return this.httpClient.get<TaskResponseDto[]>(`${this.baseUrl}/api/v1/task/all`)
   }
 
-  deleteTaskById(taskId:number):Observable<Map<string,string>>{
-    return this.httpClient.delete<Map<string,string>>(`${this.baseUrl}/api/v1/task/by-id?taskId=${taskId}`)
+  deleteTaskById(taskId:number):Observable<{[key: string]: string}>{
+    return this.httpClient.delete<{[key: string]: string}>(`${this.baseUrl}/api/v1/task/by-id?taskId=${taskId}`)
   }
 
   createTask(taskRequestDto: TaskRequestDto):Observable<TaskDto>{
@@ -29,6 +29,11 @@ export class TaskServices {
 
   updateTaskById(taskId:number,taskRequestDto: TaskRequestDto):Observable<TaskDto>{
     return this.httpClient.put<TaskDto>(`${this.baseUrl}/api/v1/task/by-id?taskId=${taskId}`,taskRequestDto);
+  }
+
+  markAsCompleted(taskId:number):Observable<{[key: string]: string}>{
+    return this.httpClient.patch<{[key: string]: string}>(
+      `${this.baseUrl}/api/v1/task/by-id/mark-as-completed?taskId=${taskId}`,{})
   }
 
   

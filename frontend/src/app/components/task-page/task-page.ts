@@ -67,10 +67,10 @@ export class TaskPage implements OnInit {
     if(!confirm.isConfirmed) return;
 
     this.taskService.deleteTaskById(taskId).subscribe({
-      next:(response: Map<string,string>)=>{
+      next:(response:{[key: string]: string})=>{
         Swal.fire({
           title: "Deleted Successfully",
-          text: `${response.get("Success")}`,
+          text: `${response["Success"]}`,
           timer: 3000
         }).then(()=> 
           this.taskList = this.taskList.filter(task => task.id !== taskId)
@@ -99,8 +99,46 @@ export class TaskPage implements OnInit {
     
   }
 
-  handleMarkComplete(taskId: number) {
-    this.taskList = this.taskList.map(task => task.id === taskId ? { ...task, status: 'COMPLETED' } : task);
+ async handleMarkComplete(taskId: number) {
+    const confirm = await Swal.fire({
+      title: `mark as completed?`,
+      icon: 'question',
+      showCancelButton: true
+    });
+
+    if(!confirm.isConfirmed) return;
+
+    this.taskService.markAsCompleted(taskId).subscribe({
+      next:(response:{[key: string]: string})=>{
+        Swal.fire({
+          title: "Completed",
+          text: `${response["Success"]}`,
+          timer: 3000
+        }).then(()=> 
+
+          window.location.reload()
+        );
+      },error: (error: HttpErrorResponse)=>{
+
+        if (error.status === 401) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Failed",
+            text: `${error.message}`,
+             timer: 3000
+           });
+        } else {
+           Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Something went wrong",
+              text: "Please try again later.",
+              timer: 3000
+            });
+          }
+      }
+    })
   }
 
   handleMarkInProgress(taskId: number) {

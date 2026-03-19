@@ -130,4 +130,15 @@ public class TaskServiceImpl implements TaskService {
 
         return ResponseEntity.ok(getTaskDto(saved));
     }
+
+    @Override
+    public ResponseEntity<Map<String, String>> markAsComplete(Long taskId) {
+
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() ->
+                new TaskNotFoundException("task has been not found"));
+        taskEntity.setStatus("COMPLETED");
+        taskRepository.save(taskEntity);
+        return ResponseEntity.ok(Map.of("Success",
+                String.format("%d task is completed",taskId)));
+    }
 }

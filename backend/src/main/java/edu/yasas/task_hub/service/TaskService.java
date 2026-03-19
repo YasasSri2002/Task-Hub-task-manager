@@ -20,5 +20,7 @@ public interface TaskService {
 
     ResponseEntity<TaskDto> updateTaskById(Long taskId, TaskRequestDto taskRequestDto);
 
+    ResponseEntity<Map<String,String>>markAsComplete(Long taskId);
+
 
 }
