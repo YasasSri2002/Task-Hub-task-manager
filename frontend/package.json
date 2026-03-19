@@ -25,6 +25,7 @@
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
+    "sweetalert2": "^11.26.23",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

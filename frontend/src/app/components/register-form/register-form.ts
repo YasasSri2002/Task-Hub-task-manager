@@ -3,6 +3,11 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { UserRegisterService } from '../../services/user-register-service';
+import { UserRequestDto } from '../../Dto/request/userRequestDto';
+import { UserDto } from '../../Dto/userDto';
+import { HttpErrorResponse } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -12,6 +17,8 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './register-form.css',
 })
 export class RegisterForm {
+
+  constructor(private userRegisterService: UserRegisterService){}
 
   isPasswordShowing: boolean = false;
   eyeIcon = faEye;
@@ -28,7 +35,65 @@ export class RegisterForm {
   }
 
   submitForm(){
-    console.log(this.registerForm.value);
+    const formValue = this.registerForm.value;
+
+
+     if (this.registerForm.invalid) {
+      Swal.fire({
+        title: "Try Again!",
+        text: "Please fill the information first",
+        icon: "warning"
+      });
+    }
+    
+
+    if (this.registerForm.valid) {
+       Swal.fire({
+        title: 'Registering...',
+        text: 'Please wait while we process your registration',
+        allowOutsideClick: false,
+        background: '#fff',
+        color: '#000000',
+        didOpen: () => { Swal.showLoading(); }
+      });
+      const userRequestDto: UserRequestDto = {
+        email: formValue.email!,
+        password: formValue.password!,
+        username: formValue.username!,
+      }
+
+      this.userRegisterService.registerUser(userRequestDto).subscribe({
+        next:(data: UserDto)=>{
+          Swal.close();
+          Swal.fire({
+            icon: 'success',
+            title: `${data.username} registed successfully!`,
+            background: '#fff',
+            color: '#000000',
+            confirmButtonColor: '#dc2626',
+            timer: 2500,
+            timerProgressBar: true,
+            customClass: { popup: 'border border-gray-700' }
+          });
+          this.clearForm();
+        },
+        error: (error: HttpErrorResponse)=>{
+          const errorBody = error.error;
+          Swal.fire({
+              icon: 'error',
+              title: 'Registration Failed',
+              text:  errorBody.message,
+              background: '#fff',
+              color: '#000000',
+              confirmButtonColor: '#dc2626',
+              customClass: { popup: 'border border-gray-700' }
+            });
+        }
+      })
+
+    }
+
+
   }
 
   togglePassword() {
