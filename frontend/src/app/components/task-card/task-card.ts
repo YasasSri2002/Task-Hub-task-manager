@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TaskResponseDto } from '../../Dto/response/taskResponseDto';
 import { TaskStatus } from '../../types/taskTypes';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-task-card',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './task-card.html',
   styleUrl: './task-card.css',
 })

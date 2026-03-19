@@ -42,6 +42,10 @@ export class TaskServices {
     )
   }
 
+  getTaskById(taskId:number):Observable<TaskResponseDto>{
+    return this.httpClient.get<TaskResponseDto>(`${this.baseUrl}/api/v1/task/by-id?taskId=${taskId}`)
+  }
+
   
 
 

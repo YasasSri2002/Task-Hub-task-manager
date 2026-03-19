@@ -22,11 +22,10 @@ export class TaskPage implements OnInit {
 
   constructor(private taskService: TaskServices){}
 
-  taskList!: TaskResponseDto[];
+  taskList: TaskResponseDto[] =[];
   taskToEdit?: TaskResponseDto;  
-  showTaskForm = false;
   statusFilter: TaskStatus | '' = ''; 
-  showForm = false;
+  showForm:boolean = false;
   selectedTask: TaskResponseDto| undefined = undefined;
 
   
