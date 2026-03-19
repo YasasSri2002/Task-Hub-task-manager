@@ -43,7 +43,7 @@
                         placeholder="*****"
                         formControlName="password"
                     />
-                    <button type="button"
+                    <button type="button" (click)="togglePassword()"
                         class="absolute right-3 flex items-center text-gray-500 hover:text-gray-800">
                                <fa-icon [icon]="isPasswordShowing ? eyeIcon : closedEyeIcon"></fa-icon> 
                     </button>
