@@ -141,8 +141,46 @@ export class TaskPage implements OnInit {
     })
   }
 
-  handleMarkInProgress(taskId: number) {
-    this.taskList = this.taskList.map(task => task.id === taskId ? { ...task, status: 'IN_PROGRESS' } : task);
+async  handleMarkInProgress(taskId: number) {
+    const confirm = await Swal.fire({
+      title: `mark as in progress?`,
+      icon: 'question',
+      showCancelButton: true
+    });
+
+    if(!confirm.isConfirmed) return;
+
+    this.taskService.markAsInProgress(taskId).subscribe({
+      next:(response:{[key: string]: string})=>{
+        Swal.fire({
+          title: "In progress!",
+          text: `${response["Success"]}`,
+          timer: 3000
+        }).then(()=> 
+
+          window.location.reload()
+        );
+      },error: (error: HttpErrorResponse)=>{
+
+        if (error.status === 401) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Failed",
+            text: `${error.message}`,
+             timer: 3000
+           });
+        } else {
+           Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Something went wrong",
+              text: "Please try again later.",
+              timer: 3000
+            });
+          }
+      }
+    })
   }
 
    onTaskUpdateSubmit(task: TaskRequestDto){

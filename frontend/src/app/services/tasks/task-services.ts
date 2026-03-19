@@ -36,6 +36,12 @@ export class TaskServices {
       `${this.baseUrl}/api/v1/task/by-id/mark-as-completed?taskId=${taskId}`,{})
   }
 
+  markAsInProgress(taskId:number):Observable<{[key: string]: string}>{
+    return this.httpClient.patch<{[key: string]: string}>(
+      `${this.baseUrl}/api/v1/task/by-id/mark-as-in-progress?taskId=${taskId}`,{}
+    )
+  }
+
   
 
 

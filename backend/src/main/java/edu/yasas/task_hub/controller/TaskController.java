@@ -55,4 +55,9 @@ public class TaskController {
         return taskService.markAsComplete(taskId);
     }
 
+    @PatchMapping("/by-id/mark-as-in-progress")
+    public ResponseEntity<Map<String,String>> markAsInProgress(@RequestParam Long taskId){
+        return taskService.markAsInProgress(taskId);
+    }
+
 }
