@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { UserRegisterService } from '../../services/user-register-service';
+import { UserRegisterService } from '../../services/register/user-register-service';
 import { UserRequestDto } from '../../Dto/request/userRequestDto';
 import { UserDto } from '../../Dto/userDto';
 import { HttpErrorResponse } from '@angular/common/http';
