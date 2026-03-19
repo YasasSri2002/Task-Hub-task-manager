@@ -56,8 +56,46 @@ export class TaskPage implements OnInit {
     return [...filteredlist,...others];
   }
 
-  handleDeleteTask(id: number) {
-    this.taskList = this.taskList.filter(task => task.id !== id);
+ async handleDeleteTask(id: number) {
+    const confirm = await Swal.fire({
+      title: `Delete task #${id}?`,
+      icon: 'question',
+      showCancelButton: true
+    });
+
+    if(!confirm.isConfirmed) return;
+
+    this.taskService.deleteTaskById(id).subscribe({
+      next:(response: Map<string,string>)=>{
+        Swal.fire({
+          title: "Deleted Successfully",
+          text: `${response.get("Success")}`,
+          timer: 3000
+        }).then(()=> 
+          this.taskList = this.taskList.filter(task => task.id !== id)
+        );
+      },error: (error: HttpErrorResponse)=>{
+
+        if (error.status === 401) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Delete Failed",
+            text: `${error.message}`,
+             timer: 3000
+           });
+        } else {
+           Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Something went wrong",
+              text: "Please try again later.",
+              timer: 3000
+            });
+          }
+      }
+    })
+    
   }
 
   handleMarkComplete(id: number) {

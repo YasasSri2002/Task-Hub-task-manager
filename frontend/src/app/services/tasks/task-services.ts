@@ -17,6 +17,10 @@ export class TaskServices {
     return this.httpClient.get<TaskResponseDto[]>(`${this.baseUrl}/api/v1/task/all`)
   }
 
+  deleteTaskById(taskId:number):Observable<Map<string,string>>{
+    return this.httpClient.delete<Map<string,string>>(`${this.baseUrl}/api/v1/task/by-id?taskId=${taskId}`)
+  }
+
   
 
 
