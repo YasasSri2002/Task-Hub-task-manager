@@ -8,17 +8,18 @@ import { UserRequestDto } from '../../Dto/request/userRequestDto';
 import { UserDto } from '../../Dto/userDto';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-register-form',
-  imports: [ReactiveFormsModule,CommonModule,FontAwesomeModule ],
+  imports: [ReactiveFormsModule,CommonModule,FontAwesomeModule],
   templateUrl: './register-form.html',
   styleUrl: './register-form.css',
 })
 export class RegisterForm {
 
-  constructor(private userRegisterService: UserRegisterService){}
+  constructor(private userRegisterService: UserRegisterService , private router: Router){}
 
   isPasswordShowing: boolean = false;
   eyeIcon = faEye;
@@ -74,7 +75,7 @@ export class RegisterForm {
             timer: 2500,
             timerProgressBar: true,
             customClass: { popup: 'border border-gray-700' }
-          });
+          }).then(()=> this.router.navigate(['/login']));
           this.clearForm();
         },
         error: (error: HttpErrorResponse)=>{
