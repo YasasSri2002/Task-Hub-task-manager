@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LoginForm } from './components/login-form/login-form';
+
 
 
 @Component({
@@ -10,5 +10,5 @@ import { LoginForm } from './components/login-form/login-form';
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('frontend');
+  protected readonly title = signal('Task Hub');
 }
