@@ -1,9 +1,51 @@
-@for (task of taskList; track task.id) {
-  <app-task-card
-    [task]="task"
-    (edit)="taskToEdit = $event; showTaskForm = true"
-    (delete)="handleDeleteTask($event)"
-    (markComplete)="handleMarkComplete($event)"
-    (markInProgress)="handleMarkInProgress($event)"
-  />
-}
+<div class="min-h-screen bg-gray-50">
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <div class="bg-white rounded-lg shadow-xl p-4 mb-6">
+        <div class="flex justify-between items-center">
+
+            <div class="flex gap-3 items-center">
+                <h2>Filter by:</h2>
+                <select [(ngModel)]="statusFilter" class="shadow-md rounded p-2">
+                    <option value="">All Status</option>
+                    <option value="TODO">Todo</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="COMPLETED">Completed</option>
+                </select>
+            </div>
+
+            <button class="bg-blue-600 text-white px-4 py-2 rounded-md gap-3" (click)="openNewTaskForm()">
+                
+                New Task
+                <i class="fa-solid fa-plus"></i>
+            </button>
+
+        </div>
+    </div>
+
+        @if(taskList.length === 0){
+            <p  class="bg-white rounded-lg p-10 text-center">
+                No tasks found
+            </p>
+        }
+        
+        <div class="grid gap-4">
+            @for (task of filteredTasks; track task.id) {
+                <app-task-card
+                    [task]="task"
+                    (edit)="selectedTask = $event; showForm = true"
+                    (delete)="handleDeleteTask($event)"
+                    (markComplete)="handleMarkComplete($event)"
+                    (markInProgress)="handleMarkInProgress($event)"
+                />
+            }
+        </div>
+    </main>
+    @if (showForm) {
+        <app-task-form
+            [task]="selectedTask"
+            (submitForm)="onTaskUpdateSubmit($event)"
+            (cancelForm)="closeForm()"
+        />
+    }
+
+</div>

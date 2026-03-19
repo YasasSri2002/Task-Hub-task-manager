@@ -1,0 +1,87 @@
+<div
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+  (click)="onOverlayClick()"
+>
+  <!-- modal box -->
+  <div
+    class="bg-white rounded-xl shadow-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto"
+    (click)="stopPropagation($event)"
+  >
+    <!-- header -->
+    <div class="flex items-center justify-between p-5 border-b border-gray-100">
+      <h2 class="text-lg font-semibold text-gray-900">{{ task ? 'Edit Task' : 'New Task' }}</h2>
+      <button type="button" (click)="onCancel()" aria-label="Close"
+        class="text-gray-400 hover:text-gray-600 transition-colors">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- form -->
+    <form [formGroup]="form"  class="p-5 space-y-4">
+      <div>
+        <label for="title" class="block text-sm font-medium mb-1 text-gray-700">
+          Title <span class="text-red-500">*</span>
+        </label>
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          placeholder="Enter task title"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+          [class.border-red-400]="form.controls.title.touched && form.controls.title.hasError('required')"
+        />
+        @if (form.controls.title.touched && form.controls.title.hasError('required')) {
+          <p class="text-red-500 text-sm pl-1 mt-1">Title is required</p>
+        }
+      </div>
+      <!-- description -->
+      <div>
+        <label for="description" class="block text-sm font-medium mb-1 text-gray-700">
+          Description
+        </label>
+        <textarea
+          id="description"
+          formControlName="description"
+          placeholder="Enter task description"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm min-h-24 resize-none"
+        ></textarea>
+      </div>
+      <!-- status -->
+      <div>
+        <label for="status" class="block text-sm font-medium mb-1 text-gray-700">
+          Status <span class="text-red-500">*</span>
+        </label>
+        <select id="status" formControlName="status"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2
+           focus:ring-blue-500 text-sm">
+           <option value="">Select a status</option>
+          <option value="TODO">To Do</option>
+          <option value="IN_PROGRESS">In Progress</option>
+          <option value="COMPLETED">Completed</option>
+        </select>
+        @if (form.controls.status.touched && form.controls.status.hasError('required')) {
+          <p class="text-red-500 text-sm pl-1 mt-1">Please select a status</p>
+        }
+      </div>
+
+     <!-- submit & cancel btn -->
+      <div class="flex gap-3 pt-2">
+        <button
+          type="submit"
+          [disabled]="loading"
+          class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed text-sm font-medium"
+        >
+          {{ loading ? 'Saving...' : (task ? 'Update Task' : 'Create Task') }}
+        </button>
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200 transition-colors text-sm font-medium"
+        >
+          Cancel
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

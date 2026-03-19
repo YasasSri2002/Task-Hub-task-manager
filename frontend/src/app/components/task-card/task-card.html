@@ -7,18 +7,12 @@
       </div>
     </div>
 
-    <p class="text-gray-600 text-sm">{{ task.description }}</p>
-
     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pt-1">
-      <div class="flex flex-col gap-1.5 text-sm text-gray-500">
+
         <div class="flex flex-wrap items-center gap-3">
           <span>Created: {{ task.createdAt | date:'medium' }}</span>
         </div>
-        <div class="text-xs text-gray-400">
-          By: <span class="font-medium text-gray-500">{{ task.user.email }}</span>
-        </div>
-      </div>
-
+      
       <div class="flex gap-1.5 shrink-0">
         @if(isNotCompleted){
             <button (click)="markComplete.emit(task.id)"
@@ -35,9 +29,9 @@
         }
 
         @if(isNotStarted){
-            <button  (click)="edit.emit(task)"
+            <button (click)="edit.emit(task)"
                 class="p-2 text-blue-800 hover:bg-blue-50 rounded-md" title="Edit">
-            <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-pen-to-square"></i>
             </button>
         }
 
