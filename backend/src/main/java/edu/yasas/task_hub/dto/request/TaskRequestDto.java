@@ -11,7 +11,7 @@ public class TaskRequestDto {
 
     private String description;
 
-    private String status; //In Progress, completed, TODO
+    private String status; //"In Progress, completed, TODO" are the status
 
     private LocalDateTime createdAt;
 

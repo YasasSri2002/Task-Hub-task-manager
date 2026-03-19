@@ -10,6 +10,7 @@ import { TaskServices } from '../../services/tasks/task-services';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponseDto } from '../../Dto/response/errorResponseDto';
+import { TaskDto } from '../../Dto/taskDto';
 
 @Component({
   selector: 'app-task-page',
@@ -56,23 +57,23 @@ export class TaskPage implements OnInit {
     return [...filteredlist,...others];
   }
 
- async handleDeleteTask(id: number) {
+ async handleDeleteTask(taskId: number) {
     const confirm = await Swal.fire({
-      title: `Delete task #${id}?`,
+      title: `Delete task #${taskId}?`,
       icon: 'question',
       showCancelButton: true
     });
 
     if(!confirm.isConfirmed) return;
 
-    this.taskService.deleteTaskById(id).subscribe({
+    this.taskService.deleteTaskById(taskId).subscribe({
       next:(response: Map<string,string>)=>{
         Swal.fire({
           title: "Deleted Successfully",
           text: `${response.get("Success")}`,
           timer: 3000
         }).then(()=> 
-          this.taskList = this.taskList.filter(task => task.id !== id)
+          this.taskList = this.taskList.filter(task => task.id !== taskId)
         );
       },error: (error: HttpErrorResponse)=>{
 
@@ -98,16 +99,85 @@ export class TaskPage implements OnInit {
     
   }
 
-  handleMarkComplete(id: number) {
-    this.taskList = this.taskList.map(task => task.id === id ? { ...task, status: 'COMPLETED' } : task);
+  handleMarkComplete(taskId: number) {
+    this.taskList = this.taskList.map(task => task.id === taskId ? { ...task, status: 'COMPLETED' } : task);
   }
 
-  handleMarkInProgress(id: number) {
-    this.taskList = this.taskList.map(task => task.id === id ? { ...task, status: 'IN_PROGRESS' } : task);
+  handleMarkInProgress(taskId: number) {
+    this.taskList = this.taskList.map(task => task.id === taskId ? { ...task, status: 'IN_PROGRESS' } : task);
   }
 
-  onTaskUpdateSubmit(data: TaskRequestDto){
+   onTaskUpdateSubmit(task: TaskRequestDto){
+    if(task.id){
+        this.taskService.updateTaskById(task.id,task).subscribe({
+          next:(task:TaskDto)=>{
+            Swal.fire({
+              icon: "success",
+              title: "Updated Successfully",
+              text: `${task.title} is updated`
+            }).then(()=> window.location.reload())
 
+          },error(error: HttpErrorResponse){
+              if (error.status === 401) {
+                Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: "Update Failed",
+                  text: `${error.message}`,
+                  timer: 3000
+                });
+              } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Something went wrong",
+                    text: "Please try again later.",
+                    timer: 3000
+                  });
+          }
+          }
+        })
+    }else{
+        this.taskService.createTask(task).subscribe({
+           next:(task:TaskDto)=>{
+            Swal.fire({
+              icon: "success",
+              title: "Created Successfully",
+              text: `${task.title} task created`
+            }).then(()=> window.location.reload())
+          },error(error: HttpErrorResponse){
+
+            const errorBody: ErrorResponseDto = error.error;
+
+            Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: "Save Failed",
+                  text: `${errorBody.message}`,
+                  timer: 3000
+                });
+            
+
+              if (error.status === 401) {
+                Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: "Save Failed",
+                  text: `${error.message}`,
+                  timer: 3000
+                });
+              } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Something went wrong",
+                    text: "Please try again later.",
+                    timer: 3000
+                  });
+          }
+          }
+        })
+    }
   }
   
   openNewTaskForm() {

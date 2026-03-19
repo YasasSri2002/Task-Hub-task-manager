@@ -1,4 +1,5 @@
 export interface TaskRequestDto{
+    id?: number;
     
     title: string;
 
