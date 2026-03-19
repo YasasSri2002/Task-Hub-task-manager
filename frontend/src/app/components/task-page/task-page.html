@@ -5,7 +5,7 @@
 
             <div class="flex gap-3 items-center">
                 <h2>Filter by:</h2>
-                <select [(ngModel)]="statusFilter" class="shadow-md rounded p-2">
+                <select [(ngModel)]="statusFilter" (ngModelChange)="onFilterChange()" class="shadow-md rounded p-2">
                     <option value="">All Status</option>
                     <option value="TODO">Todo</option>
                     <option value="IN_PROGRESS">In Progress</option>

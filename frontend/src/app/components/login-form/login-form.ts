@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
@@ -19,7 +19,7 @@ import {CookieService} from 'ngx-cookie-service';
 })
 export class LoginForm {
 
-  constructor(private loginService: UserLoginService, private cookieService: CookieService){}
+  constructor(private loginService: UserLoginService, private cookieService: CookieService, private router: Router){}
 
   isPasswordShowing: boolean = false;
   eyeIcon = faEye;
@@ -59,9 +59,11 @@ export class LoginForm {
           this.cookieService.set('auth-token', data.jwtToken, {
             expires: 7,        // expires in 7 days
             path: '/',
-            secure: true,       // only sent over HTTPS
+            secure: true,       
             sameSite: 'Strict'
           });
+
+          console.log('Cookie after set:', this.cookieService.get('auth-token'));
 
           this.cookieService.set('x-user-id', data.userId, {
             expires: 7,        // expires in 7 days
@@ -76,7 +78,7 @@ export class LoginForm {
               title: "Login Success",
               showConfirmButton: false,
               timer: 1500
-          });
+          }).then(()=> this.router.navigate(['/task-page']));
           
         },
         error: (error: HttpErrorResponse)=>{

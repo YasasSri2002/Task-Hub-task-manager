@@ -8,14 +8,16 @@ import { DetailedTaskPage } from './components/detailed-task-page/detailed-task-
 
 
 
+
+
 export const routes: Routes = [
     {path: '', component: LoginForm},
     {path:'register', component:RegisterForm},
     {path: 'login', component: LoginForm},
+
+    // protected routes
     {path: 'task-page', component: TaskPage},
     {path: 'detailed-task/:taskId', component: DetailedTaskPage}
    
-    
-
 
 ];

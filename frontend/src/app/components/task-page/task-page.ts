@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TaskResponseDto } from '../../Dto/response/taskResponseDto';
 import { CommonModule } from '@angular/common';
 import { TaskCard } from '../task-card/task-card';
@@ -20,9 +20,11 @@ import { TaskDto } from '../../Dto/taskDto';
 })
 export class TaskPage implements OnInit {
 
-  constructor(private taskService: TaskServices){}
+  constructor(private taskService: TaskServices, private cdr: ChangeDetectorRef){}
+
 
   taskList: TaskResponseDto[] =[];
+  filteredTasks: TaskResponseDto[] = [];
   taskToEdit?: TaskResponseDto;  
   statusFilter: TaskStatus | '' = ''; 
   showForm:boolean = false;
@@ -30,9 +32,10 @@ export class TaskPage implements OnInit {
 
   
   ngOnInit(){
-     this.taskService.getAllTasks().subscribe({
+    this.taskService.getAllTasks().subscribe({
       next:(data: TaskResponseDto[])=>{
         this.taskList= data;
+        this.applyFilter();
       },error:(error: HttpErrorResponse)=>{
 
         const errorBody: ErrorResponseDto = error.error; 
@@ -48,13 +51,21 @@ export class TaskPage implements OnInit {
      })
   }
 
-  get filteredTasks(): TaskResponseDto[] {
-    if (!this.statusFilter) return [...this.taskList];
-    const filteredlist = this.taskList.filter(task => task.status === this.statusFilter);
-    const others = this.taskList.filter(task=> task.status !== this.statusFilter);
-
-    return [...filteredlist,...others];
+  applyFilter() {
+    if (!this.statusFilter) {
+      this.filteredTasks = [...this.taskList];
+    } else {
+      const filteredlist = this.taskList.filter(task => task.status === this.statusFilter);
+      const others = this.taskList.filter(task => task.status !== this.statusFilter);
+      this.filteredTasks = [...filteredlist, ...others];
+    }
+    this.cdr.detectChanges();
   }
+
+  onFilterChange() {
+    this.applyFilter();
+  }
+
 
  async handleDeleteTask(taskId: number) {
     const confirm = await Swal.fire({
