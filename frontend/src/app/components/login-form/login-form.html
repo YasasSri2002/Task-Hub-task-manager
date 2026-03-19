@@ -16,7 +16,7 @@
         <form [formGroup]="loginForm" class="grid gap-4 w-full sm:w-md md:w-lg">
         
             <div class="grid gap-1">
-                <label  htmlFor="email">Email</label>
+                <label  for="email">Email</label>
                 <input type="text" name="email"
                         class=" border border-gray-600 rounded-md px-2  h-8  sm:h-10  " 
                         placeholder="you@example.com"
@@ -34,7 +34,7 @@
                        
             </div>
             <div class="grid gap-1">
-                <label htmlFor="password">Password</label>
+                <label for="password">Password</label>
                 <div class="relative flex items-center w-full">
                     <input name="password"
                         [type]="isPasswordShowing ? 'text' : 'password'"
@@ -54,7 +54,7 @@
                     </p> 
                 }      
             </div>
-            <button type="submit" 
+            <button type="submit" (click)="submitForm()"
                 class="w-full border border-blue-600 bg-blue-600 py-1 px-4 rounded-md text-white 
                 active:scale-75">
                     Sign in
