@@ -20,5 +20,5 @@ public interface TaskService {
 
     ResponseEntity<TaskDto> updateTaskById(Long taskId, TaskRequestDto taskRequestDto);
 
-    
+
 }

@@ -6,6 +6,10 @@ import { TaskStatus } from '../../types/taskTypes';
 import { FormsModule } from '@angular/forms';
 import { TaskForm } from '../task-form/task-form';
 import { TaskRequestDto } from '../../Dto/request/taskRequestDto';
+import { TaskServices } from '../../services/tasks/task-services';
+import Swal from 'sweetalert2';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorResponseDto } from '../../Dto/response/errorResponseDto';
 
 @Component({
   selector: 'app-task-page',
@@ -15,6 +19,8 @@ import { TaskRequestDto } from '../../Dto/request/taskRequestDto';
 })
 export class TaskPage implements OnInit {
 
+  constructor(private taskService: TaskServices){}
+
   taskList!: TaskResponseDto[];
   taskToEdit?: TaskResponseDto;  
   showTaskForm = false;
@@ -22,45 +28,24 @@ export class TaskPage implements OnInit {
   showForm = false;
   selectedTask: TaskResponseDto| undefined = undefined;
 
+  
   ngOnInit(){
-     this.taskList = [
-      {
-        id: 1,
-        title: 'testing task card',
-        description: 'testing if the task card is showing as intended',
-        status: 'IN_PROGRESS',
-        createdAt: new Date('2025-03-19'),
-        user: { 
-          email: 'john@example.com',
-          username: "jhon",
-          id: "123123"
-        }
-      },
-      {
-        id: 2,
-        title: 'testing task card',
-        description: 'testing if the task card is showing as intended',
-        status: 'COMPLETED',
-        createdAt: new Date('2025-03-19'),
-        user: { 
-          email: 'john@example.com',
-          username: "jhon",
-          id: "123123"
-        }
-      },
-      {
-        id: 3,
-        title: 'testing task card',
-        description: 'testing if the task card is showing as intended',
-        status: 'TODO',
-        createdAt: new Date('2025-03-19'),
-        user: { 
-          email: 'john@example.com',
-          username: "jhon",
-          id: "123123"
-        }
+     this.taskService.getAllTasks().subscribe({
+      next:(data: TaskResponseDto[])=>{
+        this.taskList= data;
+      },error:(error: HttpErrorResponse)=>{
+
+        const errorBody: ErrorResponseDto = error.error; 
+    
+
+        Swal.fire({
+          icon: "error",
+          title: `Error ${errorBody.httpStatus}`,
+          text: `${errorBody.message}`,
+          
+        })
       }
-     ]
+     })
   }
 
   get filteredTasks(): TaskResponseDto[] {
