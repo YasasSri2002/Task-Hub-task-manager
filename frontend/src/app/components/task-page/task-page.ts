@@ -50,7 +50,7 @@ export class TaskPage implements OnInit {
       }
      })
   }
-
+  // does not filter out other card but reorder the filtered ones to top
   applyFilter() {
     if (!this.statusFilter) {
       this.filteredTasks = [...this.taskList];
