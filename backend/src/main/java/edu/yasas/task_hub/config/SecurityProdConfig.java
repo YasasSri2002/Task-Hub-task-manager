@@ -43,7 +43,7 @@ public class SecurityProdConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(corsConfig-> corsConfig.configurationSource((request)->{
                     CorsConfiguration corsConfiguration = new CorsConfiguration();
-                    corsConfiguration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+                    corsConfiguration.setAllowedOrigins(Collections.singletonList("http://localhost:4000"));
                     corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
                     corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
                     corsConfiguration.setMaxAge(10L);

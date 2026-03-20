@@ -90,4 +90,5 @@ __screenshots__/
 Thumbs.db
 frontend/src/environments/**
 
+.env
 

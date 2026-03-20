@@ -3,6 +3,12 @@ spring:
     url: jdbc:mysql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
+    hikari:
+      connection-timeout: 30000 #NOTE:this is making application wait for 30sec,
+                      #i have done this because  want to make sure database
+                      #up before run the application
+      initialization-fail-timeout: 60000 #wait 60
+      retry-attempts: 5
   jpa:
     hibernate:
       ddl-auto: none
